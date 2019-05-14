@@ -28,7 +28,6 @@ def parse_article(link):
         print("WTF")
         print(title)
     date = date_elem.getText().lstrip()
-    #print(date)
     return date, author, content, title
 
 def parse_page_articles(link, page):
@@ -42,9 +41,7 @@ def parse_page_articles(link, page):
     for elem in article_elements:
         art = {"title": "", "date": "", "author": "", "link": "", "source": "", "content": ""}
         a = BeautifulSoup(elem.h2.encode(), 'lxml')
-        #print(a.a["title"])
         art["link"] = a.a["href"]
-        #print(art["link"])
         date, author, content, title = parse_article(art["link"])
         art["date"] = date
         art["author"] = author
@@ -58,9 +55,6 @@ def parse_page_articles(link, page):
 def main(cat_url):
     for page in range(1, 2):
         parse_page_articles(cat_url, page)
-
-    #print(articles[2])
-
     with open("articles.json", "w", encoding="utf-8") as f:
         json.dump(articles, f, ensure_ascii=False)
 
